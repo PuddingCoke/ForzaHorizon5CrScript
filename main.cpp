@@ -122,6 +122,43 @@ int main()
 
 		Click();
 
+		//极少时候会遇到我的历史记录刷不出来赛事的情况，对此也要进行处理。(这里给大概8s的加载等待时间，超时要重新加载我的历史记录)
+		bool timeOut = true;
+
+		while (timeOut)
+		{
+			for (UINT i = 0; i < 80; i++)
+			{
+				//position 761 550 Color 247 247 247
+				if (Color::getPixel(761, 550) == Color(247, 247, 247))
+				{
+					timeOut = false;
+					break;
+				}
+
+				Sleep(100);
+			}
+
+			if (timeOut)
+			{
+				cout << "history load failed retry!\n";
+
+				SetCursorPos(407, 247);
+
+				Sleep(900);
+
+				Click();
+
+				SetCursorPos(1080, 246);
+
+				Sleep(900);
+
+				Click();
+
+				Sleep(400);
+			}
+		}
+
 		//赛事 单人
 		SetCursorPos(1280, 750);
 
